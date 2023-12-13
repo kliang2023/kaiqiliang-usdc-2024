@@ -22,11 +22,34 @@
     /** You will need to implement your search and 
      * return the appropriate object here. */
 
-    var result = {
-        "SearchTerm": "",
-        "Results": []
-    };
+    //search is case sensitive
+
+    //results is list of "ISBN", "Page", and "Line"
+    var foundbooks = ""
     
+    //always return at least the searchTerm, "Results": [] also seems mandatory, but can be empty
+    var result = {
+        "SearchTerm": searchTerm,
+        "Results": [foundbooks]
+    };
+    if (JSON.stringify(scannedTextObj).length>0){
+        //the list of books is not empty
+        for (book in scannedTextObj){ //check each book object
+            if (JSON.stringify(book.Content).length>0){//book has scanned Content
+                for (scan in book.Content){//check each scanned Content
+                    if (JSON.stringify(scan.Text).indexOf(searchTerm)>-1){ //the search term exists in the Text
+                        var found = {
+                            "ISBN": book.ISBN,
+                            "Page": scan.Page,
+                            "Line": scan.Line
+                        };
+                        foundbooks+=found;
+                    }
+                }
+            }
+        }
+    }   
+    //list of books is empty
     return result; 
 }
 
@@ -102,3 +125,10 @@ if (test2result.Results.length == 1) {
     console.log("Expected:", twentyLeaguesOut.Results.length);
     console.log("Received:", test2result.Results.length);
 }
+
+/*
+At the least, you should write three kinds of tests:
+○ Positive tests: tests that return a match.
+○ Negative tests: tests that do not return any matches.
+○ Case-sensitive tests: tests that match (for example) on “The” but not on “the”.
+*/
