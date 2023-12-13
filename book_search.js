@@ -175,6 +175,47 @@ const twentyLeaguesIn5 = [
         ] 
     }
 ]
+
+/** Example input object with two book objects. */
+const twentyLeaguesIn6 = [
+    {
+        "Title": "Twenty Thousand Leagues Under the Sea",
+        "ISBN": "9780000528531",
+        "Content": [
+            {
+                "Page": 31,
+                "Line": 8,
+                "Text": "now simply went on by her own momentum.  The dark-"
+            },
+            {
+                "Page": 31,
+                "Line": 9,
+                "Text": "ness was then profound; and however good the Canadian\'s"
+            },
+            {
+                "Page": 31,
+                "Line": 10,
+                "Text": "eyes were, I asked myself how he had managed to see, and"
+            } 
+        ] 
+    },
+    {
+        "Title": "The Roses Beyond the Gate",
+        "ISBN": "9230008428512",
+        "Content": [
+            {
+                "Page": 4,
+                "Line": 9,
+                "Text": "This was not an every day occurence. The thorns"
+            },
+            {
+                "Page": 9,
+                "Line": 2,
+                "Text": "everyday with you and there is not any new"
+            }
+        ] 
+    }
+]
     
 /** Example output object */
 const twentyLeaguesOut = {
@@ -411,4 +452,14 @@ if (test11result.Results.length == 2) {
     console.log("FAIL: Test 11");
     console.log("Expected:", twentyLeaguesOut9.Results.length);
     console.log("Received:", test11result.Results.length);
+}
+
+/** We can check if it works when we search for punctuation*/
+const test12result = findSearchTermInBooks("the", twentyLeaguesIn6);
+if (JSON.stringify(twentyLeaguesOut) === JSON.stringify(test12result)) {
+    console.log("PASS: Test 12");
+} else {
+    console.log("FAIL: Test 12");
+    console.log("Expected:", twentyLeaguesOut);
+    console.log("Received:", test12result);
 }
