@@ -32,12 +32,18 @@
         "SearchTerm": searchTerm,
         "Results": [foundbooks]
     };
-    if (JSON.stringify(scannedTextObj).length>0){
+    if ((scannedTextObj).length>0){
         //the list of books is not empty
-        for (book in scannedTextObj){ //check each book object
-            if (JSON.stringify(book.Content).length>0){//book has scanned Content
-                for (scan in book.Content){//check each scanned Content
-                    if (JSON.stringify(scan.Text).indexOf(searchTerm)>-1){ //the search term exists in the Text
+        //console.log(scannedTextObj)
+        for (let i = 0; i< scannedTextObj.length; i++){ //check each book object
+            //console.log(scannedTextObj[i])
+            let book = scannedTextObj[i]
+            if ((book.Content).length>0){//book has scanned Content
+                //console.log(book.Content)
+                for (let a= 0; a <book.Content.length; a++){//check each scanned Content
+                    let scan = book.Content[i];
+                    console.log(scan)
+                    if ((scan.Text).indexOf(searchTerm)>-1){ //the search term exists in the Text
                         var found = {
                             "ISBN": book.ISBN,
                             "Page": scan.Page,
