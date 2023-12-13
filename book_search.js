@@ -32,8 +32,8 @@
         "SearchTerm": searchTerm,
         "Results": []
     };
-    if (searchTerm.length==0){
-        return result
+    if (searchTerm.length==0){ //check if the search term is empty
+        return result //return if the search term is empty
     }
     if ((scannedTextObj).length>0){
         //the list of books is not empty
@@ -45,15 +45,15 @@
                 //console.log(book.Content)
                 for (let a= 0; a <book.Content.length; a++){//check each scanned Content
                     let scan = book.Content[a];
-                    console.log(scan)
+                    //console.log(scan)
                     if ((scan.Text).indexOf(searchTerm)>-1){ //the search term exists in the Text
-                        console.log("found a match")
+                        //console.log("found a match")
                         var found = {
                             "ISBN": book.ISBN,
                             "Page": scan.Page,
                             "Line": scan.Line
                         };
-                        console.log(found)
+                        //console.log(found)
                         result.Results = result.Results.concat(found)
                     }
                 }
@@ -262,6 +262,23 @@ const twentyLeaguesOut8 = {
     ]
 }
 
+/** Example output object for a search term of a space*/
+const twentyLeaguesOut9 = {
+    "SearchTerm": " ",
+    "Results": [
+        {
+            "ISBN": "9230008428512",
+            "Page": 4,
+            "Line": 9
+        },
+        {
+            "ISBN": "9230008428512",
+            "Page": 9,
+            "Line": 2
+        }
+    ]
+}
+
 /*
  _   _ _   _ ___ _____   _____ _____ ____ _____ ____  
 | | | | \ | |_ _|_   _| |_   _| ____/ ___|_   _/ ___| 
@@ -384,4 +401,14 @@ if (test10result.Results.length == 0) {
     console.log("FAIL: Test 10");
     console.log("Expected:", twentyLeaguesOut8.Results.length);
     console.log("Received:", test10result.Results.length);
+}
+
+/** We could choose to check that we get the right number of results when the search term is a space. */
+const test11result = findSearchTermInBooks(" ", twentyLeaguesIn4); 
+if (test11result.Results.length == 2) {
+    console.log("PASS: Test 11");
+} else {
+    console.log("FAIL: Test 11");
+    console.log("Expected:", twentyLeaguesOut9.Results.length);
+    console.log("Received:", test11result.Results.length);
 }
