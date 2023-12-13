@@ -30,7 +30,7 @@
     //always return at least the searchTerm, "Results": [] also seems mandatory, but can be empty
     var result = {
         "SearchTerm": searchTerm,
-        "Results": [foundbooks]
+        "Results": []
     };
     if ((scannedTextObj).length>0){
         //the list of books is not empty
@@ -41,15 +41,17 @@
             if ((book.Content).length>0){//book has scanned Content
                 //console.log(book.Content)
                 for (let a= 0; a <book.Content.length; a++){//check each scanned Content
-                    let scan = book.Content[i];
+                    let scan = book.Content[a];
                     console.log(scan)
                     if ((scan.Text).indexOf(searchTerm)>-1){ //the search term exists in the Text
+                        console.log("found a match")
                         var found = {
                             "ISBN": book.ISBN,
                             "Page": scan.Page,
                             "Line": scan.Line
                         };
-                        foundbooks+=found;
+                        console.log(found)
+                        result.Results = result.Results.concat(found)
                     }
                 }
             }
