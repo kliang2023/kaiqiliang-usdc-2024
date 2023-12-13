@@ -454,7 +454,7 @@ if (test11result.Results.length == 2) {
     console.log("Received:", test11result.Results.length);
 }
 
-/** We can check if it works when we search for punctuation*/
+/** We can check if it works when we search in two books*/
 const test12result = findSearchTermInBooks("the", twentyLeaguesIn6);
 if (JSON.stringify(twentyLeaguesOut) === JSON.stringify(test12result)) {
     console.log("PASS: Test 12");
