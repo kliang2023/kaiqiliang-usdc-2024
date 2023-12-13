@@ -32,6 +32,9 @@
         "SearchTerm": searchTerm,
         "Results": []
     };
+    if (searchTerm.length==0){
+        return result
+    }
     if ((scannedTextObj).length>0){
         //the list of books is not empty
         //console.log(scannedTextObj)
@@ -85,6 +88,93 @@ const twentyLeaguesIn = [
         ] 
     }
 ]
+
+/** Example input object. */
+const twentyLeaguesIn2 = [
+    {
+        "Title": "Twenty Thousand Leagues Under the Sea",
+        "ISBN": "9780000528531",
+        "Content": [
+            {
+                "Page": 31,
+                "Line": 8,
+                "Text": "now simply went on by her own momentum.  The dark-"
+            },
+            {
+                "Page": 31,
+                "Line": 9,
+                "Text": "ness was then profound; and however good the Canadian\'s"
+            },
+            {
+                "Page": 31,
+                "Line": 10,
+                "Text": "eyes were, I asked myself how he had managed to see, and"
+            } ,
+            {
+                "Page": 32,
+                "Line": 15,
+                "Text": "but the present feeling draped all over me."
+            }
+        ] 
+    }
+]
+
+const twentyLeaguesIn3 = [
+    {
+        "Title": "Twenty Thousand Leagues Under the Sea",
+        "ISBN": "9780000528531",
+        "Content": [
+            {
+                "Page": 31,
+                "Line": 8,
+                "Text": "BEFORE THE EVENING SUN CAME UP, THERE WAS LIGHT"
+            },
+            {
+                "Page": 31,
+                "Line": 9,
+                "Text": "AND THEN THE TIDES RUSHED IN AND ALL WAS DARK."
+            }
+        ] 
+    }
+]
+
+const twentyLeaguesIn4 = [
+    {
+        "Title": "The Roses Beyond the Gate",
+        "ISBN": "9230008428512",
+        "Content": [
+            {
+                "Page": 4,
+                "Line": 9,
+                "Text": "This was not an every day occurence. The thorns"
+            },
+            {
+                "Page": 9,
+                "Line": 2,
+                "Text": "everyday with you and there is not any new"
+            }
+        ] 
+    }
+]
+
+const twentyLeaguesIn5 = [
+    {
+        "Title": "The Roses Beyond the Gate",
+        "ISBN": "9230008428512",
+        "Content": [
+            {
+                "Page": 9,
+                "Line": 2,
+                "Text": "everyday with you and there is not any new"
+            },
+            {
+                "Page": 4,
+                "Line": 9,
+                "Text": "This was not an every day occurence. The thorns"
+            } 
+        ] 
+    }
+]
     
 /** Example output object */
 const twentyLeaguesOut = {
@@ -95,6 +185,80 @@ const twentyLeaguesOut = {
             "Page": 31,
             "Line": 9
         }
+    ]
+}
+
+/** Example output object */
+const twentyLeaguesOut2 = {
+    "SearchTerm": "the",
+    "Results": [
+        {
+            "ISBN": "9780000528531",
+            "Page": 31,
+            "Line": 9
+        },
+        {
+            "ISBN": "9780000528531",
+            "Page": 32,
+            "Line": 15
+        }
+    ]
+}
+
+/** Example output object */
+const twentyLeaguesOut3 = {
+    "SearchTerm": "the",
+    "Results": [
+    ]
+}
+
+/** Example output object for "on by" */
+const twentyLeaguesOut4 = {
+    "SearchTerm": "on by",
+    "Results": [
+        {
+            "ISBN": "9780000528531",
+            "Page": 31,
+            "Line": 8
+        }
+    ]
+}
+
+/** Example output object */
+const twentyLeaguesOut5 = {
+    "SearchTerm": "every-day",
+    "Results": [
+    ]
+}
+
+/** Example output object */
+const twentyLeaguesOut6 = {
+    "SearchTerm": "everyday",
+    "Results": [
+        {
+            "ISBN": "9230008428512",
+            "Page": 9,
+            "Line": 2
+        }
+    ]
+}
+
+/** Example output object for "." */
+const twentyLeaguesOut7 = {
+    "SearchTerm": ".",
+    "Results": [
+        {
+            "ISBN": "9780000528531",
+            "Page": 31,
+            "Line": 8
+        }
+    ]
+}
+
+/** Example output object for a blank search term */
+const twentyLeaguesOut8 = {
+    "SearchTerm": "",
+    "Results": [
     ]
 }
 
@@ -140,3 +304,84 @@ At the least, you should write three kinds of tests:
 ○ Negative tests: tests that do not return any matches.
 ○ Case-sensitive tests: tests that match (for example) on “The” but not on “the”.
 */
+
+/* Return the correct number given two */
+const test3result = findSearchTermInBooks("the", twentyLeaguesIn2); 
+if (JSON.stringify(twentyLeaguesOut2) === JSON.stringify(test3result)) {
+    console.log("PASS: Test 3");
+} else {
+    console.log("FAIL: Test 3");
+    console.log("Expected:", twentyLeaguesOut2);
+    console.log("Received:", test3result);
+}
+
+
+/*Check that there are no results when the input is capitalized because it is case-sensitive*/
+const test4result = findSearchTermInBooks("the", (twentyLeaguesIn3)); 
+if (test4result.Results.length == 0) {
+    console.log("PASS: Test 4");
+} else {
+    console.log("FAIL: Test 4");
+    console.log("Expected:", twentyLeaguesOut3.Results.length);
+    console.log("Received:", test4result.Results.length);
+}
+
+/** We can check that it works regarding phrases */
+const test5result = findSearchTermInBooks("on by", twentyLeaguesIn); 
+if (JSON.stringify(twentyLeaguesOut4) === JSON.stringify(test5result)) {
+    console.log("PASS: Test 5");
+} else {
+    console.log("FAIL: Test 5");
+    console.log("Expected:", twentyLeaguesOut4);
+    console.log("Received:", test5result);
+}
+
+/** We can check for more case-sensitivity regarding punctuation - two false cases*/
+const test6result = findSearchTermInBooks("every-day", twentyLeaguesIn4);
+if (JSON.stringify(twentyLeaguesOut5) === JSON.stringify(test6result)) {
+    console.log("PASS: Test 6");
+} else {
+    console.log("FAIL: Test 6");
+    console.log("Expected:", twentyLeaguesOut5);
+    console.log("Received:", test6result);
+}
+
+/** We can check for more case-sensitivity regarding punctuation - only one match*/
+const test7result = findSearchTermInBooks("everyday", twentyLeaguesIn4);
+if (JSON.stringify(twentyLeaguesOut6) === JSON.stringify(test7result)) {
+    console.log("PASS: Test 7");
+} else {
+    console.log("FAIL: Test 7");
+    console.log("Expected:", twentyLeaguesOut6);
+    console.log("Received:", test7result);
+}
+
+/** We can check that it works when the scanned content is out of order */
+const test8result = findSearchTermInBooks("everyday", twentyLeaguesIn5);
+if (JSON.stringify(twentyLeaguesOut6) === JSON.stringify(test8result)) {
+    console.log("PASS: Test 8");
+} else {
+    console.log("FAIL: Test 8");
+    console.log("Expected:", twentyLeaguesOut6);
+    console.log("Received:", test8result);
+}
+
+/** We can check if it works when we search for punctuation*/
+const test9result = findSearchTermInBooks(".", twentyLeaguesIn);
+if (JSON.stringify(twentyLeaguesOut7) === JSON.stringify(test9result)) {
+    console.log("PASS: Test 9");
+} else {
+    console.log("FAIL: Test 9");
+    console.log("Expected:", twentyLeaguesOut7);
+    console.log("Received:", test9result);
+}
+
+/** We could choose to check that we get the right number of results when there is no search term. */
+const test10result = findSearchTermInBooks("", twentyLeaguesIn); 
+if (test10result.Results.length == 0) {
+    console.log("PASS: Test 10");
+} else {
+    console.log("FAIL: Test 10");
+    console.log("Expected:", twentyLeaguesOut8.Results.length);
+    console.log("Received:", test10result.Results.length);
+}
